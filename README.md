@@ -69,3 +69,7 @@ service ContractCallService {
 }
 ```
 
+## git的使用
+1. git remote -v //显示所有的分支信息
+2. git remote add [nickname] url //添加远程仓库的url，并将该仓库起名为**nickname** e.g. git remote add origin  git@github.com:tianqixin/runoob-git-test.git
+3. git push [远程仓库名] [本地分支名]:[远程分支名] //将本地仓库的[本地分支名]对应的分支的更新提交至[远程仓库]对应的[远程分支]上 e.g. git push origin master 将本地仓库的master分支的更新提交到远程仓库origin的master分支上
