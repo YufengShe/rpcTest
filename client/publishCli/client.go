@@ -2,11 +2,10 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"google.golang.org/grpc"
-	"io"
 	"log"
-	"test/pb/helloService"
-	"time"
+	"test/pb/pubSubService"
 )
 
 /*func main() {
@@ -31,29 +30,19 @@ func main()  {
 	}
 	defer conn.Close()
 
-	client := helloService.NewHelloServiceClient(conn)
-	channel, err := client.Channel(context.Background())
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-	go func() {
-		for {
-			err := channel.Send(&helloService.String{Value: "YF"})
-			if err != nil {
-				log.Fatal(err.Error())
-			}
-			time.Sleep(time.Second)
-		}
-	}()
-
+	var publishText string
+	pubCli := pubSubService.NewPubSubServiceClient(conn)
 	for {
-		reply, err := channel.Recv()
+		_, _ = fmt.Scanf("%s", &publishText)
+		if publishText == "q" {
+			log.Println("quit!")
+			break
+		}
+		rst, err := pubCli.Publish(context.Background(), &pubSubService.String{Value: publishText})
 		if err != nil {
-			if err == io.EOF {
-				break
-			}
 			log.Fatal(err.Error())
 		}
-		log.Println(reply.GetValue())
+		log.Println(rst.GetValue())
 	}
+
 }

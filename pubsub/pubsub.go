@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	p := pubsub.NewPublisher(100*time.Millisecond, 10)
+	p := pubsub.NewPublisher(100*time.Millisecond, 1)
 
 	golang := p.SubscribeTopic(func(v interface{}) bool {
 		if key, ok := v.(string); ok {
